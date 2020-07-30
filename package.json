@@ -3,6 +3,10 @@
   "displayName": "TypeScript React FC Templater",
   "description": "Generates a TypeScript React functional component template when creating a new .tsx file",
   "publisher": "joelbergman",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joelbman/vscode-ts-react-fc-template"
+  },
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.47.0"
