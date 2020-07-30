@@ -1,7 +1,8 @@
 {
   "name": "ts-react-fc-template",
-  "displayName": "TypeScript React functional component template generator",
+  "displayName": "TypeScript React FC Templater",
   "description": "Generates a TypeScript React functional component template when creating a new .tsx file",
+  "publisher": "Joel Bergman",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.47.0"
