@@ -1,4 +1,15 @@
 # ts-react-fc-template
 
-Generates a TypeScript React functional component template when creating a new .tsx file.
-The base for this code was taken from [https://github.com/Que3216/vscode-typescript-react-template](https://github.com/Que3216/vscode-typescript-react-template)
+Generates a TS React functional component template when creating a new .tsx file with the following content:
+
+```javascript
+import React from 'react'
+
+interface Props {}
+
+const $FileName = () => {
+  return <div></div>
+}
+
+export default $FileName
+```
