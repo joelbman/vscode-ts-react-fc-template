@@ -9,18 +9,18 @@
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "tsx",
+    "template",
+    "typescript",
+    "react",
+    "functional",
+    "component"
+  ],
   "activationEvents": [
-    "onCommand:ts-react-fc-template.helloWorld"
+    "onLanguage:typescriptreact"
   ],
   "main": "./out/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "ts-react-fc-template.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
   "scripts": {
     "vscode:prepublish": "yarn run compile",
     "compile": "tsc -p ./",
