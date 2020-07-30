@@ -1,27 +1,64 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import { window, workspace, Disposable, ExtensionContext } from 'vscode'
+import { extname, basename } from 'path'
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+// Used https://github.com/Que3216/vscode-typescript-react-template as the base for this code
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "ts-react-fc-template" is now active!');
+export function activate(ctx: ExtensionContext) {
+  const templater = new Templater()
+  const controller = new TemplaterController(templater)
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('ts-react-fc-template.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from ts-react-fc-template!');
-	});
-
-	context.subscriptions.push(disposable);
+  ctx.subscriptions.push(controller)
+  ctx.subscriptions.push(templater)
 }
 
-// this method is called when your extension is deactivated
-export function deactivate() {}
+export class Templater {
+  public fillOutTemplateIfEmpty() {
+    const editor = window.activeTextEditor
+    if (!editor) return
+
+    const doc = editor.document
+
+    if (doc.getText().length !== 0) return
+    if (doc.languageId !== 'typescriptreact') return
+
+    const componentName = basename(doc.fileName, extname(doc.fileName))
+
+    const template = [
+      `import React from 'react'`,
+      ``,
+      `interface Props {}`,
+      ``,
+      `const ${componentName} = () => {`,
+      `  return <div></div>`,
+      `}`,
+      ``,
+      `export default ${componentName}`,
+    ].join('\n')
+
+    editor.edit((builder) => {
+      builder.insert(doc.positionAt(0), template)
+    })
+  }
+
+  public dispose() {}
+}
+
+class TemplaterController {
+  private _templater: Templater
+  private _disposable: Disposable
+
+  constructor(templater: Templater) {
+    this._templater = templater
+    let subscriptions: Disposable[] = []
+    workspace.onDidOpenTextDocument(this._onEvent, this, subscriptions)
+    this._disposable = Disposable.from(...subscriptions)
+  }
+
+  private _onEvent() {
+    this._templater.fillOutTemplateIfEmpty()
+  }
+
+  public dispose() {
+    this._disposable.dispose()
+  }
+}
