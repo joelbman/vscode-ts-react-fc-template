@@ -5,7 +5,7 @@
   "publisher": "joelbergman",
   "repository": {
     "type": "git",
-    "url": "https://github.com/joelbman/vscode-ts-react-fc-template"
+    "url": "https://github.com/joelbman/vscode-ts-react-fc-template.git"
   },
   "version": "0.0.1",
   "engines": {
